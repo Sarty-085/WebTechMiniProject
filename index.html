@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CityCare Hospital</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f8fb;
+    color: #263238;
+    line-height: 1.6;
+}
+header {
+    background: #1976d2;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    border-bottom: 5px dashed #0d47a1;
+}
+header h1 { margin: 0; font-size: 2.5em; }
+header p { margin: 10px 0 0; font-size: 1.2em; }
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-bottom: 2px solid #ccc;
+}
+nav a {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 2px dotted #1976d2;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+nav a:hover {
+    background: #1976d2;
+    color: white;
+    border: 2px solid #0d47a1;
+}
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 15px;
+}
+section {
+    background: white;
+    margin-bottom: 30px;
+    padding: 30px;
+    border: 2px dashed #d6dfe5;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+h2 {
+    color: #0d47a1;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+.hero {
+    text-align: center;
+    border-left: 8px solid #1976d2;
+    border-right: 8px solid #1976d2;
+    border-top: 2px dashed #d6dfe5;
+    border-bottom: 2px dashed #d6dfe5;
+}
+.hero img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 3px solid #90caf9;
+}
+.card-container, .doctor-container, .contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+.card {
+    width: 220px;
+    padding: 20px;
+    border: 2px solid #90caf9;
+    border-radius: 10px;
+    background: #e3f2fd;
+    text-align: center;
+    transition: transform 0.3s ease, border 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border: 2px dashed #1565c0;
+}
+.card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+.card h3 { color: #1565c0; margin-top: 0; }
+.doctor-card {
+    width: 250px;
+    padding: 25px;
+    border: 2px dotted #bbdefb;
+    border-radius: 12px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+.doctor-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border: 2px solid #1976d2;
+}
+.doctor-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: none;
+}
+.contact-card {
+    flex: 1;
+    min-width: 280px;
+    padding: 25px;
+    border: 2px dashed #cfd8dc;
+    border-radius: 10px;
+    background: #fcfcfc;
+    transition: border 0.3s ease;
+}
+.contact-card:hover {
+    border: 2px solid #90a4ae;
+}
+.emergency {
+    background: #ffebee;
+    border: 3px dashed #ef9a9a;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.emergency:hover {
+    transform: scale(1.02);
+    background: #ffcdd2;
+    border: 3px solid #e53935;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 15px;
+    border: 2px dotted #b0bec5;
+    text-align: left;
+}
+th {
+    background: #1976d2;
+    color: white;
+    border: 2px solid #0d47a1;
+}
+tr:hover td {
+    background: #f1f8e9;
+}
+form {
+    max-width: 800px;
+    margin: auto;
+}
+fieldset {
+    padding: 25px;
+    border: 2px dashed #90caf9;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    background: #fafafa;
+}
+legend {
+    font-weight: bold;
+    color: #1565c0;
+    font-size: 1.2em;
+    padding: 0 10px;
+    border: 1px solid #90caf9;
+    background: white;
+    border-radius: 5px;
+}
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px dotted #90a4ae;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border 0.3s ease;
+}
+input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
+    border: 2px solid #1976d2;
+    outline: none;
+}
+.radio-group, .checkbox-group {
+    margin-top: 10px;
+}
+.radio-group input, .checkbox-group input {
+    margin-right: 5px;
+}
+.radio-group label, .checkbox-group label {
+    margin-right: 15px;
+}
+button, input[type="submit"], input[type="reset"] {
+    padding: 12px 25px;
+    border: 2px dashed transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+input[type="submit"] {
+    background: #1976d2;
+    color: white;
+    border: 2px solid #1976d2;
+}
+input[type="submit"]:hover {
+    background: #0d47a1;
+    border: 2px dashed white;
+}
+input[type="reset"] {
+    background: #cfd8dc;
+    color: #263238;
+    border: 2px solid #90a4ae;
+    margin-left: 10px;
+}
+input[type="reset"]:hover {
+    background: #90a4ae;
+    color: white;
+    border: 2px dashed #263238;
+}
+meter, progress {
+    width: 100%;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>CityCare Hospital</h1>
+<p>Your Health, Our Priority</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#departments">Departments</a>
+<a href="#doctors">Doctors</a>
+<a href="#appointment">Appointment</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<main>
+
+<section id="home" class="hero">
+<h2>Welcome to CityCare Hospital</h2>
+<p>CityCare Hospital provides quality healthcare services with experienced doctors and modern medical facilities.</p>
+<p><b>Book your appointment and take the first step towards better health.</b></p>
+<img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Hospital Building">
+</section>
+
+<section id="departments">
+<h2>Our Departments</h2>
+<div class="card-container">
+<article class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/883/883360.png" alt="Cardiology">
+<h3>Cardiology</h3>
+<p>Specialized healthcare for heart and cardiovascular conditions.</p>
+</article>
+<article class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/3004/3004085.png" alt="Orthopaedics">
+<h3>Orthopaedics</h3>
+<p>Treatment related to bones, joints and muscles.</p>
+</article>
+<article class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/2966/2966440.png" alt="Paediatrics">
+<h3>Paediatrics</h3>
+<p>Healthcare services for children and teenagers.</p>
+</article>
+<article class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/2860/2860882.png" alt="General Medicine">
+<h3>General Medicine</h3>
+<p>General consultation and treatment for common health problems.</p>
+</article>
+</div>
+</section>
+
+<section>
+<h2>Department Timings</h2>
+<table>
+<tr>
+<th>Department</th>
+<th>Available Days</th>
+<th>Timing</th>
+</tr>
+<tr>
+<td>General Medicine</td>
+<td>Monday - Saturday</td>
+<td>9 AM - 1 PM</td>
+</tr>
+<tr>
+<td>Cardiology</td>
+<td>Monday, Wednesday, Friday</td>
+<td>10 AM - 2 PM</td>
+</tr>
+<tr>
+<td>Orthopaedics</td>
+<td>Tuesday - Saturday</td>
+<td>11 AM - 3 PM</td>
+</tr>
+<tr>
+<td>Paediatrics</td>
+<td>Monday - Saturday</td>
+<td>9 AM - 12 PM</td>
+</tr>
+</table>
+</section>
+
+<aside class="emergency">
+<h2>Emergency Department</h2>
+<p>Our emergency department is available 24 hours a day.</p>
+<p>Emergency Contact: <b>020-12345678</b></p>
+</aside>
+
+<section>
+<h2>Hospital Capacity</h2>
+<p>Current Bed Availability</p>
+<meter value="65" min="0" max="100">65%</meter>
+<p>65% of hospital beds are currently occupied.</p>
+<p>Today's appointment planning:</p>
+<progress value="75" max="100">75%</progress>
+<p>75% of today's appointment slots are planned.</p>
+</section>
+
+<section id="doctors">
+<h2>Our Doctors</h2>
+<div class="doctor-container">
+<article class="doctor-card">
+<img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dr. Ananya Sharma">
+<h3>Dr. Ananya Sharma</h3>
+<p><b>Specialization:</b> Cardiologist</p>
+<p><b>Experience:</b> 12 Years</p>
+<p><b>Available:</b> Mon, Wed, Fri</p>
+</article>
+<article class="doctor-card">
+<img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dr. Rahul Mehta">
+<h3>Dr. Rahul Mehta</h3>
+<p><b>Specialization:</b> Orthopaedic</p>
+<p><b>Experience:</b> 10 Years</p>
+<p><b>Available:</b> Tue - Sat</p>
+</article>
+<article class="doctor-card">
+<img src="https://images.unsplash.com/photo-1594824432258-f7bc1a3b1ce5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dr. Priya Nair">
+<h3>Dr. Priya Nair</h3>
+<p><b>Specialization:</b> Paediatrician</p>
+<p><b>Experience:</b> 8 Years</p>
+<p><b>Available:</b> Mon - Sat</p>
+</article>
+<article class="doctor-card">
+<img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dr. Arjun Kapoor">
+<h3>Dr. Arjun Kapoor</h3>
+<p><b>Specialization:</b> General Physician</p>
+<p><b>Experience:</b> 15 Years</p>
+<p><b>Available:</b> Mon - Sat</p>
+</article>
+</div>
+</section>
+
+<section id="appointment">
+<h2>Appointment Planner</h2>
+<p style="text-align:center;">Fill in the form below to request an appointment.</p>
+
+<form>
+<fieldset>
+<legend>Patient Details</legend>
+
+<label for="name">Full Name:</label>
+<input type="text" id="name" name="name" placeholder="Enter your full name" autofocus required>
+
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" placeholder="example@email.com" required>
+
+<label for="phone">Phone Number:</label>
+<input type="tel" id="phone" name="phone" placeholder="10 digit phone number" pattern="[0-9]{10}" required>
+
+<label for="age">Age:</label>
+<input type="number" id="age" name="age" min="1" max="120" placeholder="Enter your age" required>
+
+<label for="dob">Date of Birth:</label>
+<input type="date" id="dob" name="dob" required>
+
+<label>Gender:</label>
+<div class="radio-group">
+<input type="radio" id="male" name="gender" value="Male" required>
+<label for="male">Male</label>
+<input type="radio" id="female" name="gender" value="Female">
+<label for="female">Female</label>
+<input type="radio" id="other" name="gender" value="Other">
+<label for="other">Other</label>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Appointment Details</legend>
+
+<label for="department">Select Department:</label>
+<select id="department" name="department" required>
+<option value="">-- Select Department --</option>
+<option value="general">General Medicine</option>
+<option value="cardiology">Cardiology</option>
+<option value="orthopaedics">Orthopaedics</option>
+<option value="paediatrics">Paediatrics</option>
+</select>
+
+<label for="doctor">Select Doctor:</label>
+<select id="doctor" name="doctor" required>
+<option value="">-- Select Doctor --</option>
+<option value="ananya">Dr. Ananya Sharma</option>
+<option value="rahul">Dr. Rahul Mehta</option>
+<option value="priya">Dr. Priya Nair</option>
+<option value="arjun">Dr. Arjun Kapoor</option>
+</select>
+
+<label for="date">Appointment Date:</label>
+<input type="date" id="date" name="date" required>
+
+<label>Preferred Time:</label>
+<div class="radio-group">
+<input type="radio" id="morning" name="time" value="Morning" required>
+<label for="morning">Morning</label>
+<input type="radio" id="afternoon" name="time" value="Afternoon">
+<label for="afternoon">Afternoon</label>
+<input type="radio" id="evening" name="time" value="Evening">
+<label for="evening">Evening</label>
+</div>
+
+<label>Reason for Visit:</label>
+<div class="checkbox-group">
+<input type="checkbox" id="consultation" name="reason" value="consultation">
+<label for="consultation">General Consultation</label><br>
+<input type="checkbox" id="followup" name="reason" value="followup">
+<label for="followup">Follow-up</label><br>
+<input type="checkbox" id="checkup" name="reason" value="checkup">
+<label for="checkup">Health Check-up</label>
+</div>
+
+<label for="problem">Describe Your Problem:</label>
+<textarea id="problem" name="problem" rows="5" placeholder="Briefly describe your problem"></textarea>
+</fieldset>
+
+<div style="text-align: center;">
+<input type="submit" value="Book Appointment">
+<input type="reset" value="Clear Form">
+</div>
+</form>
+</section>
+
+<section id="contact">
+<h2>Contact Us</h2>
+<div class="contact-container">
+<article class="contact-card">
+<h3>Hospital Address</h3>
+<p>CityCare Hospital Building<br>25 Healthcare Avenue<br>Margao, Goa,<br>India</p>
+</article>
+<article class="contact-card">
+<h3>Contact Information</h3>
+<p>Phone: 020-12345678</p>
+<p>Email: citycare@example.com</p>
+</article>
+<article class="contact-card">
+<h3>Opening Hours</h3>
+<p>OPD: 9 AM - 6 PM</p>
+<p>Emergency: 24 Hours</p>
+<p>Reception: 8 AM - 8 PM</p>
+</article>
+</div>
+</section>
+
+</main>
+
+</body>
+</html>
