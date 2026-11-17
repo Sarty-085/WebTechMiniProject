@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notices>
+  <notice>
+    <title>24x7 Cardiac Emergency Unit Active</title>
+    <department>Cardiology</department>
+    <priority>High</priority>
+  </notice>
+  <notice>
+    <title>Free Paediatric Vaccination Camp This Saturday (9 AM - 1 PM)</title>
+    <department>Paediatrics</department>
+    <priority>Normal</priority>
+  </notice>
+  <notice>
+    <title>Orthopaedic Joint Care Clinic Extended Until 4 PM</title>
+    <department>Orthopaedics</department>
+    <priority>Normal</priority>
+  </notice>
+</notices>

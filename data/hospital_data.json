@@ -1,0 +1,11 @@
+{
+  "hospital": "CityCare Hospital",
+  "bedsOccupied": 68,
+  "opdProgress": 80,
+  "departments": [
+    { "name": "General Medicine", "doctorsOnDuty": 4, "waitMins": 15 },
+    { "name": "Cardiology", "doctorsOnDuty": 2, "waitMins": 25 },
+    { "name": "Orthopaedics", "doctorsOnDuty": 3, "waitMins": 20 },
+    { "name": "Paediatrics", "doctorsOnDuty": 2, "waitMins": 10 }
+  ]
+}
