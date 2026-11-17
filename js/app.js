@@ -141,7 +141,7 @@ function showStatus(id, text, isError = false) {
     el.className = isError ? 'output-box error-box' : 'output-box';
 }
 
-// Exp 10: GET JSON
+// Exp 10: GET JSON + GET XML seamlessly
 function loadHospitalJSON() {
     sendXHR('GET', 'data/hospital_data.json', null, null, (xhr) => {
         const data = JSON.parse(xhr.responseText);
@@ -149,13 +149,12 @@ function loadHospitalJSON() {
         document.getElementById('bedText').textContent = `${data.bedsOccupied}% of hospital beds are currently occupied.`;
         document.getElementById('opdProgress').value = data.opdProgress;
         document.getElementById('opdText').textContent = `${data.opdProgress}% of today's appointment slots are planned.`;
-        const lines = data.departments.map(d => `${d.name}: ${d.doctorsOnDuty} doctors (Wait ~${d.waitMins}m)`);
-        showStatus('liveOutput', 'GET JSON ->\n' + lines.join('\n'));
+        const lines = data.departments.map(d => `${d.name}: ${d.doctorsOnDuty} doctors on duty (Est. wait ~${d.waitMins} mins)`);
+        loadNoticesXML('Department Availability:\n' + lines.join('\n'));
     }, (err) => showStatus('liveOutput', err, true));
 }
 
-// Exp 10: GET XML
-function loadNoticesXML() {
+function loadNoticesXML(statsPrefix = '') {
     sendXHR('GET', 'data/notices.xml', null, null, (xhr) => {
         const xml = xhr.responseXML;
         const nodes = xml.getElementsByTagName('notice');
@@ -163,17 +162,11 @@ function loadNoticesXML() {
         for (let i = 0; i < nodes.length; i++) {
             const title = nodes[i].getElementsByTagName('title')[0].textContent;
             const dept = nodes[i].getElementsByTagName('department')[0].textContent;
-            out.push(`[${dept}] ${title}`);
+            out.push(`• [${dept}] ${title}`);
         }
-        showStatus('liveOutput', 'GET XML ->\n' + out.join('\n'));
+        const combined = (statsPrefix ? statsPrefix + '\n\nHospital Notices:\n' : '') + out.join('\n');
+        showStatus('liveOutput', combined);
     }, (err) => showStatus('liveOutput', err, true));
-}
-
-// Exp 12: Error handling demo
-function testErrorHandling() {
-    sendXHR('GET', 'api/nonexistent.php', null, null, () => {}, (err) => {
-        showStatus('liveOutput', 'Handled Error -> ' + err, true);
-    });
 }
 
 // Exp 10: POST JSON or XML
@@ -181,7 +174,7 @@ function sendQuickInquiry(format) {
     const name = document.getElementById('inqName').value.trim();
     const message = document.getElementById('inqMsg').value.trim();
     if (!name || !message) {
-        showStatus('inquiryOutput', 'Please enter both name and message.', true);
+        showStatus('inquiryOutput', 'Please enter both your name and question.', true);
         return;
     }
     if (format === 'xml') {
@@ -215,25 +208,38 @@ function submitBatchQueue() {
     sendXHR('POST', 'api/server.php?action=batch', JSON.stringify(testQueue), 'application/json', (xhr) => {
         const res = JSON.parse(xhr.responseText);
         const list = res.items.map((x, i) => `${i + 1}. ${x.name} (${x.age}) - ${x.test}`).join('\n');
-        showStatus('queueOutput', `${res.message} (${res.count} items)\n${list}`);
+        showStatus('queueOutput', `${res.message} (${res.count} tests)\n${list}`);
     }, (err) => showStatus('queueOutput', err, true));
 }
 
-// Exp 13: Dynamic User Input with JSON in AJAX
+// Exp 13 & 15: Validate first, then submit dynamically via AJAX
 function submitAppointmentAJAX(event) {
     event.preventDefault();
     const payload = {
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim(),
-        age: document.getElementById('age').value.trim(),
+        age: parseInt(document.getElementById('age').value, 10),
         department: document.getElementById('department').value,
         doctor: document.getElementById('doctor').value,
         date: document.getElementById('date').value
     };
+
+    const errors = [];
+    if (!/^[A-Za-z\s]+$/.test(payload.name)) errors.push('Enter a valid full name (letters and spaces only).');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) errors.push('Enter a valid email address.');
+    if (!/^[0-9]{10}$/.test(payload.phone)) errors.push('Enter a valid 10-digit phone number.');
+    if (!payload.age || payload.age < 1 || payload.age > 120) errors.push('Enter an age between 1 and 120.');
+    if (!payload.department || !payload.doctor || !payload.date) errors.push('Select department, doctor, and appointment date.');
+
+    if (errors.length > 0) {
+        showStatus('appointmentResult', 'Please fix the following:\n• ' + errors.join('\n• '), true);
+        return;
+    }
+
     sendXHR('POST', 'api/server.php?action=book', JSON.stringify(payload), 'application/json', (xhr) => {
         const res = JSON.parse(xhr.responseText);
-        showStatus('appointmentResult', `${res.message} ID: ${res.bookingId}\n${res.summary}`);
+        showStatus('appointmentResult', `${res.message} Reference ID: ${res.bookingId}\n${res.summary}`);
     }, (err) => showStatus('appointmentResult', err, true));
 }
 

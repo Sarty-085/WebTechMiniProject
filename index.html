@@ -226,7 +226,7 @@
             </article>
 
             <article class="info-box">
-                <h3>Family Lab Test Queue (Batch JSON)</h3>
+                <h3>Family Lab Test Booking</h3>
                 <label for="qName">Patient Name:</label>
                 <input type="text" id="qName" placeholder="e.g. Meera">
                 <label for="qAge">Age:</label>
@@ -239,10 +239,10 @@
                 </select>
                 <div style="margin-top:10px;">
                     <button type="button" class="secondary" onclick="addToQueue()">Add to Queue</button>
-                    <button type="button" onclick="submitBatchQueue()">Submit All (AJAX)</button>
+                    <button type="button" onclick="submitBatchQueue()">Schedule All Tests</button>
                 </div>
                 <pre id="queueList" style="font-size:0.9em; margin-top:10px;"></pre>
-                <div id="queueOutput" class="output-box">Batch response appears here.</div>
+                <div id="queueOutput" class="output-box">Scheduled test confirmation will appear here.</div>
             </article>
         </div>
     </section>
@@ -252,7 +252,7 @@
         <h2>Appointment Planner</h2>
         <p style="text-align:center;">Fill in the form below to request an appointment.</p>
 
-        <form action="api/validate_form.php" method="post" autocomplete="on" onsubmit="submitAppointmentAJAX(event)" onreset="handleFormReset()">
+        <form action="api/validate_form.php" method="post" autocomplete="on" onsubmit="submitAppointmentAJAX(event)" onreset="handleFormReset()" novalidate>
             <fieldset>
                 <legend>Patient Details</legend>
 
@@ -337,27 +337,25 @@
             </fieldset>
 
             <div style="text-align: center;">
-                <input type="submit" value="Book Appointment (AJAX)">
-                <button type="submit" class="secondary" formaction="api/validate_form.php" formnovalidate>Validate via PHP</button>
+                <input type="submit" value="Book Appointment">
                 <input type="reset" value="Clear Form">
             </div>
         </form>
         <div id="appointmentResult" class="output-box">Booking confirmation will appear here.</div>
     </section>
 
-    <!-- Exp 10: POST JSON & POST XML -->
+    <!-- Exp 10: Quick Desk Inquiry -->
     <section id="quick-inquiry">
-        <h2>Quick Desk Inquiry (POST JSON / XML)</h2>
+        <h2>Quick Desk Inquiry</h2>
         <div style="max-width:600px; margin:auto;">
             <label for="inqName">Your Name:</label>
             <input type="text" id="inqName" placeholder="Enter your name">
             <label for="inqMsg">Question:</label>
             <input type="text" id="inqMsg" placeholder="e.g. Visiting hours for ICU?">
             <div style="margin-top:12px;">
-                <button type="button" onclick="sendQuickInquiry('json')">Send as JSON</button>
-                <button type="button" class="secondary" onclick="sendQuickInquiry('xml')">Send as XML</button>
+                <button type="button" onclick="sendQuickInquiry('json')">Send Inquiry</button>
             </div>
-            <div id="inquiryOutput" class="output-box">Server inquiry response appears here.</div>
+            <div id="inquiryOutput" class="output-box">Our reception desk response will appear here.</div>
         </div>
     </section>
 
