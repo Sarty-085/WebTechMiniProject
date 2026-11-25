@@ -142,6 +142,10 @@ function showStatus(id, text, isError = false) {
 }
 
 // Exp 10: GET JSON + GET XML seamlessly
+function refreshLiveStatus() {
+    loadHospitalJSON();
+}
+
 function loadHospitalJSON() {
     sendXHR('GET', 'data/hospital_data.json', null, null, (xhr) => {
         const data = JSON.parse(xhr.responseText);
